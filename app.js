@@ -14,7 +14,7 @@ const dashboardRoutes = require('./routes/dashboard.routes');
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://meetlakhani98787:WufgV1jhPHnW44bd@cluster0.pkbtp7p.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://jigishpatel30:BrArWEstq6FaE9j6@cluster0.6jxvjzr.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log(err));
 
@@ -32,7 +32,7 @@ app.use(session({
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: 'mongodb+srv://meetlakhani98787:WufgV1jhPHnW44bd@cluster0.pkbtp7p.mongodb.net/' })
+    store: MongoStore.create({ mongoUrl: 'mongodb+srv://jigishpatel30:BrArWEstq6FaE9j6@cluster0.6jxvjzr.mongodb.net/' })
 }));
 
 // Middleware to set the user globally for all views
