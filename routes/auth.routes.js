@@ -2,11 +2,8 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const nodemailer = require('nodemailer');
-const Income = require('../models/income.model');
-const Expense = require('../models/expense.model');
 const crypto = require('crypto'); // For generating OTP
 const mongoose = require('mongoose');
-const Goal = require('../models/goal.model'); // import your goal model
 const router = express.Router();
 
 // Register Route

@@ -6,9 +6,7 @@ const expressLayouts = require('express-ejs-layouts');
 
 // Import Routes
 const authRoutes = require('./routes/auth.routes');
-const goalRoutes = require('./routes/goal.routes');
-const reportRoutes = require('./routes/report.routes');
-const dashboardRoutes = require('./routes/dashboard.routes');
+
 
 // Initialize app
 const app = express();
@@ -53,9 +51,7 @@ app.use(async (req, res, next) => {
 
 // Routes
 app.use(authRoutes);
-app.use(goalRoutes);
-app.use(reportRoutes);
-app.use(dashboardRoutes);
+
 // Home route
 app.get('/home', async (req, res) => {
     if (req.session.userId) {
