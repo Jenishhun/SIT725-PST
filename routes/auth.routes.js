@@ -87,7 +87,7 @@ router.post('/forgot-password', async (req, res) => {
 
     const otp = crypto.randomInt(100000, 999999).toString();
     req.session.otp = otp;
-    req.session.userId = user._id;
+    req.session.resetUserId = user._id;
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -130,11 +130,19 @@ router.post('/verify-otp', async (req, res) => {
       });
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await User.findByIdAndUpdate(req.session.userId, { password: hashedPassword });
+    // Use resetUserId for password reset flow instead of userId
+    const userId = req.session.resetUserId;
+    if (!userId) {
+      // No reset session info — ask user to restart forgot password
+      return res.redirect('/forgot-password');
+    }
 
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await User.findByIdAndUpdate(userId, { password: hashedPassword });
+
+    // Clean up the reset session keys
     delete req.session.otp;
-    delete req.session.userId;
+    delete req.session.resetUserId;
 
     res.redirect('/login');
   } catch (error) {
@@ -145,6 +153,7 @@ router.post('/verify-otp', async (req, res) => {
     });
   }
 });
+
 
 // Reset Password (logged-in user)
 router.get('/reset-password', isAuth, (req, res) => {
